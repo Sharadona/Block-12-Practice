@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import AppStatus from '../components/AppStatus'
+import AppStatus from "../components/AppStatus.vue";
 
 export default {
   components: {AppStatus}
