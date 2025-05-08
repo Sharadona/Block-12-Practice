@@ -29,8 +29,8 @@ export const store = createStore({
         }
     },
     getters: {
-        getActiveCountTasks() {
-
+        activeCountTasks(state) {
+            return state.tasks.filter((task) => task.status === 'active').length
         }
     }
 });
