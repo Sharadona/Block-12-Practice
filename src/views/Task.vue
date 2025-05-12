@@ -1,17 +1,17 @@
 <template>
-  <div class="card">
+  <div class="card" v-if="task">
     <h2>{{task.title}}</h2>
     <p><strong>Статус</strong>: <AppStatus :type="task.status" /></p>
     <p>{{ new Date().toLocaleDateString() }}</p>
     <p><strong>Описание</strong>: {{task.description}}</p>
     <div>
-      <button class="btn">Взять в работу</button>
-      <button class="btn primary">Завершить</button>
-      <button class="btn danger">Отменить</button>
+      <button class="btn" @click="statusBtn('pending')">Взять в работу</button>
+      <button class="btn primary" @click="statusBtn('done')">Завершить</button>
+      <button class="btn danger" @click="statusBtn('cancelled')">Отменить</button>
     </div>
   </div>
-  <h3 class="text-white center">
-    Задачи с id = <strong>Tут АЙДИ</strong> нет.
+  <h3 class="text-white center" v-else>
+    Задачи с id = <strong>{{id}}</strong> нет.
   </h3>
 </template>
 
@@ -31,8 +31,14 @@ export default {
     const task = computed(() => store.state.task)
     store.dispatch("getTask", id);
 
+    const statusBtn = (status) => {
+      store.dispatch("changeStatus", status);
+    }
+
     return {
-      task
+      task,
+      id,
+      statusBtn
     }
   }
 }

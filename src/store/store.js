@@ -16,6 +16,9 @@ export const store = createStore({
         },
         getTask(state, payload) {
             state.task = payload
+        },
+        changeStatus(state, payload) {
+            state.task.status = payload
         }
     },
     actions: {
@@ -34,7 +37,14 @@ export const store = createStore({
             context.commit('getTask', task)
         },
         changeStatus(context, payload) {
-
+            const tasks = JSON.parse(localStorage.getItem('tasks')) ?? []
+            const newTasks = tasks.map(task => {
+                if(task.id === context.state.task.id) {
+                    task.status = payload
+                } return task
+            })
+            localStorage.setItem('tasks', JSON.stringify(newTasks))
+            context.commit('changeStatus', payload)
         }
     },
     getters: {

@@ -41,14 +41,18 @@ export default {
         title: title.value,
         date: date.value,
         description: description.value,
-        status: 'active'
+        status: getStatusByDate()
       }
-      store.dispatch('createTask', task)
-      router.push('/')
+
+        store.dispatch('createTask', task)
+        router.push('/')
     }
 
     const getStatusByDate = () => {
-
+      if(new Date(date.value) < new Date(new Date().toISOString().slice(0, 10))) {
+        return 'cancelled'
+      }
+      return 'active'
     }
 
     const isValid = computed(() => {
